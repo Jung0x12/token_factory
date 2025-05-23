@@ -16,4 +16,17 @@ contract TokenFactoryScript is Script {
 
         vm.stopBroadcast();
     }
+
+    function createToken(TokenFactory tokenFactory, string memory name, string memory symbol, address initialOwner) public {
+        uint256 deployerKey = vm.envUint("PRIVATE_KEY");
+
+        vm.startBroadcast(deployerKey);
+
+        (address proxy, address implementation) = tokenFactory.createToken(name, symbol, initialOwner);
+
+        console2.log("Created token at", proxy);
+        console2.log("Implementation at", implementation);
+        
+        vm.stopBroadcast();
+    }
 }
